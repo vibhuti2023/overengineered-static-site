@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OverEngineered Static Site</title>
+    <title>${SITE_NAME}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,8 +13,8 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to OverEngineered Static Site.</h1>
-    <p>Version: 1.0</p>
+    <h1>Welcome to ${SITE_NAME}.</h1>
+    <p>Version: ${SITE_VERSION}</p>
 </body>
 </html>
 

@@ -1,0 +1,12 @@
+{
+  "name": "overengineered-static-site",
+  "version": "1.0.0",
+  "description": "An overengineered static website",
+  "scripts": {
+    "start": "serve -s public -l 8080"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
+
