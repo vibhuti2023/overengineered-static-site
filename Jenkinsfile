@@ -2,39 +2,34 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "overengineered-static-site"
-        REGISTRY = credentials('ECR_REGISTRY')
+        BUCKET_NAME = "overengineered-static-site-assets"
+        AWS_REGION = "us-east-1"
+        DISTRIBUTION_ID = "EXBWVR3BQ6UCD"  // Replace with your actual CloudFront Distribution ID
     }
 
     stages {
         stage('Build') {
             steps {
                 script {
-                    sh 'docker build -t $IMAGE_NAME:latest .'
+                    sh 'npm run build'
                 }
             }
         }
 
-        stage('Push Image') {
+        stage('Deploy to S3') {
             steps {
                 script {
-                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REGISTRY'
-                    sh 'docker tag $IMAGE_NAME:latest $REGISTRY/$IMAGE_NAME:latest'
-                    sh 'docker push $REGISTRY/$IMAGE_NAME:latest'
+                    sh 'aws s3 sync public s3://$BUCKET_NAME --acl public-read'
                 }
             }
         }
 
-        stage('Deploy') {
+        stage('Invalidate CloudFront Cache') {
             steps {
                 script {
-                    sh 'docker pull $REGISTRY/$IMAGE_NAME:latest'
-                    sh 'docker stop static-site || true'
-                    sh 'docker rm static-site || true'
-                    sh 'docker run -d -p 80:80 --name static-site $REGISTRY/$IMAGE_NAME:latest'
+                    sh 'aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"'
                 }
             }
         }
     }
 }
-
