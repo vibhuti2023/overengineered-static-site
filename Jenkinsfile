@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "overengineered-static-site"
-        REGISTRY = "692859949881.dkr.ecr.us-east-1.amazonaws.com"
+        REGISTRY = credentials('ECR_REGISTRY')
     }
 
     stages {
