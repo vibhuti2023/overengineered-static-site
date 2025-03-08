@@ -4,7 +4,7 @@ pipeline {
     environment {
         BUCKET_NAME = "overengineered-static-site-assets"
         AWS_REGION = "us-east-1"
-        DISTRIBUTION_ID = "d208h4jgfytds6"  // Replace with your actual CloudFront Distribution ID
+        DISTRIBUTION_ID = "EXBWVR3BQ6UCD"  // Replace with your actual CloudFront Distribution ID
     }
 
     stages {
